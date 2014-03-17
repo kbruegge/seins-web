@@ -47,3 +47,10 @@ h1 {
     text-align: center;
 
 }
+div.center{
+    text-align: center;
+}
+div.center table  {
+    margin: 0 auto;
+    
+}

@@ -7,12 +7,32 @@
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
     <link rel="stylesheet" href="../static/main.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
     {% if title %}
     <title>S1 - {{title}} - Abfahrten</title>
     {% else %}
     <title>S1 - Abfahrten</title>
     {% endif %}
+    
+    
+<script type="text/javascript">
+        function appendTrain(train){
+          $("#trains").append('<tr>'  + 
+                                    '<td>' + train.departure_time + '</td>' + 
+                                    '<td>' + train.delay + '</td>' + 
+                               '</tr>');
+        }
+        $.getJSON("/connections/", function(data){
+            var trains = [];
+            trains = data;
+            console.log(trains instanceof Array);
+            trains.forEach( appendTrain );
+        });
+        
+</script>
+
+
 </head>
 <body>
 
@@ -20,7 +40,7 @@
     
         <div class="title">
             <h1>Kommt die verkackte S1?</h1>
-            <h2>Wissen wann die Bahn kommt. Weil ist geiler als warten.</h2>
+            <h2>Wissen wann die scheiß Bahn von der Uni abfährt. Ist geiler als warten.</h2>
         </div>
         
 
@@ -28,21 +48,41 @@
             </p>
 
         <div class="pure-g-r">
-        <div class="pure-u-1-2">
-            <div class="zug-box">
+        <div class="pure-u-1-2 center">
+            <div class="zug-box" id="connections">
                 <h3>Richtung Dortmund</h3>
-                <p>
-                    YUI's lightweight core and modular architecture make it scalable, fast, and robust. Built by frontend engineers at Yahoo!, YUI powers the most popular websites in the world.
-                </p>
+                <table class="pure-table pure-table-striped connections">
+                    <thead>
+                        <tr>
+                            <th>Abfahrt</th>
+                            <th>Verspätung</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="trains">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="pure-u-1-2">
+        <div class="pure-u-1-2 center">
             <div class="zug-box">
                 <h3>Richtung Solingen</h3>
-                <p>
-                    YUI's intuitive and well-documented API takes you from basic DOM handling to building performant and maintainable applications on desktop browsers, mobile devices, and servers.
-                </p>
+                <table class="pure-table pure-table-striped connections">
+                    <thead>
+                        <tr>
+                            <th>Abfahrt</th>
+                            <th>Verspätung</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="trains">
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="pure-u-1">
