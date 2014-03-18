@@ -16,19 +16,16 @@ a{
     margin-left: 2px;
 }
 
-img.center{
-    margin-top: 140px;
-}
-
 h1 {
     color: #fa3d7e;
     font-weight: 100;
-    margin: 70px 0 30px;
+    margin: 70px 0 10px;
 }
 
 .title h1{
     text-align: center;
     font-size: 3em;
+    line-height: 0.9em
 }
 
 .title h2 {
@@ -37,6 +34,7 @@ h1 {
     font-weight: 300;
     margin-bottom: 30px;
     padding: 0;
+    line-height: 0.9em;
 }
 
 .footer{
@@ -45,12 +43,31 @@ h1 {
     font-size: 80%;
     padding: 1em;
     text-align: center;
+}
+div.zug-box{
+    text-align: center;
+    height: 220px;
+}
+div.zug-box table.connections {
+    margin: 0 auto;
+    display: none; 
+}
+div.loader p {
+    color: #a4a4a4;
+    margin-top: 0px;
+}
 
+div.error{
+    display: none;
+}
+div.error p{
+    color: #fa3d7e;
+    font-weight: bold;
 }
 div.center{
     text-align: center;
 }
-div.center table  {
-    margin: 0 auto;
-    
+div.center img{
+    margin-top: 80px;
+    width: 670px;
 }

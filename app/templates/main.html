@@ -9,26 +9,46 @@
     <link rel="stylesheet" href="../static/main.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 
-    {% if title %}
-    <title>S1 - {{title}} - Abfahrten</title>
-    {% else %}
     <title>S1 - Abfahrten</title>
-    {% endif %}
     
     
 <script type="text/javascript">
-        function appendTrain(train){
-          $("#trains").append('<tr>'  + 
+        function appendTrain(train, direction){
+          $("#trains_" + direction).append('<tr>'  +
                                     '<td>' + train.departure_time + '</td>' + 
                                     '<td>' + train.delay + '</td>' + 
                                '</tr>');
+          $("div.loader#"+direction).hide();
+          $("table.connections#"+direction).fadeIn();
         }
-        $.getJSON("/connections/", function(data){
-            var trains = [];
-            trains = data;
-            console.log(trains instanceof Array);
-            trains.forEach( appendTrain );
-        });
+    
+        function displayError(direction){
+            $("div.loader#"+direction).hide();
+            $("div.error#"+direction).fadeIn();
+        }
+        function fetch(direction){
+            $.getJSON("/connections/?direction=" + direction, function(data){
+                var trains = [];
+                trains = data;
+                //wenns ein array ist haben wir bestimmt ne richtige antwort bekommen
+                if (trains instanceof Array){
+                    trains.forEach( function (element, index, array) {
+                            appendTrain(element, direction);
+                    });
+                } else {
+                    displayError(direction);
+                }
+                
+            }) .fail(function() { //falls die getJson fehl schlägt.
+                 displayError(direction);
+            });
+        }
+        function start(){
+            fetch("dortmund")
+            fetch("solingen")
+        }
+        //keine klammern hintern den funktionsdingsie. sonst wirds sofort ausgeführt
+        $( document ).ready( start );
         
 </script>
 
@@ -37,10 +57,11 @@
 <body>
 
     <div class="content">
-    
         <div class="title">
             <h1>Kommt die verkackte S1?</h1>
-            <h2>Wissen wann die scheiß Bahn von der Uni abfährt. Ist geiler als warten.</h2>
+            <h2>Wissen wann die scheiß Bahn von der Uni abfährt
+                <br>
+                Ist geiler als warten.</h2>
         </div>
         
 
@@ -48,10 +69,17 @@
             </p>
 
         <div class="pure-g-r">
-        <div class="pure-u-1-2 center">
-            <div class="zug-box" id="connections">
+        <div class="pure-u-1-2 zug-box">
                 <h3>Richtung Dortmund</h3>
-                <table class="pure-table pure-table-striped connections">
+                <div class="loader" id="dortmund"> 
+                    <img src="../static/loader.gif">
+                    <p>Lädt...</p>
+                </div>
+                <div class="error" id="dortmund"> 
+                    <p>X</p>
+                    <p>Kaputt.</p>
+                </div>
+                <table class="pure-table pure-table-striped connections" id="dortmund">
                     <thead>
                         <tr>
                             <th>Abfahrt</th>
@@ -59,18 +87,24 @@
                         </tr>
                     </thead>
 
-                    <tbody id="trains">
+                    <tbody id="trains_dortmund">
                         <tr>
                         </tr>
                     </tbody>
                 </table>
-            </div>
         </div>
 
-        <div class="pure-u-1-2 center">
-            <div class="zug-box">
+        <div class="pure-u-1-2 zug-box">
                 <h3>Richtung Solingen</h3>
-                <table class="pure-table pure-table-striped connections">
+                <div class="loader" id="solingen"> 
+                    <img src="../static/loader.gif">
+                    <p>Lädt...</p>
+                </div>
+                <div class="error" id="solingen"> 
+                    <p>X</p>
+                    <p>Kaputt.</p>
+                </div>
+                <table class="pure-table pure-table-striped connections" id="solingen">
                     <thead>
                         <tr>
                             <th>Abfahrt</th>
@@ -78,22 +112,21 @@
                         </tr>
                     </thead>
 
-                    <tbody id="trains">
+                    <tbody id="trains_solingen">
                         <tr>
                         </tr>
                     </tbody>
                 </table>
-            </div>
         </div>
-        <div class="pure-u-1">
-            <img class="center" src="http://25.media.tumblr.com/tumblr_lq1axvzHGT1r1oee5o1_1280.jpg"
-                 alt="Sample image of a meeting for a responsive image example.">
+        <div class="pure-u-1 center">
+            <img src="http://25.media.tumblr.com/tumblr_lq1axvzHGT1r1oee5o1_1280.jpg"
+                 alt="Image of Muenster HBF.">
         </div>
     </div>
 
     </div>
     <div class="footer">
-     Hosted by Heroku. Made with <a href="www.python.org" > Python 3.3+</a>  and <a href="http://flask.pocoo.org/" >Flask</a>. F+!"§rk me on <a href="https://github.com/mackaiver" > Github</a>. See <a href="www.woistbier.de" >woistbier.de</a> for some  pretty beer! 
+     Hosted by Heroku. Made with <a href="http://www.python.org" > Python 3.3+</a>  and <a href="http://flask.pocoo.org/" >Flask</a>. F+!"§rk me on <a href="https://github.com/mackaiver" > Github</a>. See <a href="http://woistbier.de" >woistbier.de</a> for some  pretty beer! 
     </div>
         
 
