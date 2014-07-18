@@ -23,9 +23,9 @@ def connections():
     try:
         if direction and direction.lower().strip() == "solingen":
             #print("Requesting solingen")
-            page = DBPageParser("Universität Dortmund S-Bahnhof", "Solingen Hbf")
+            page = DBPageParser("Dortmund Universität", "Solingen Hbf")
         else:
-            page = DBPageParser("Universität Dortmund S-Bahnhof", "Dortmund Hbf")
+            page = DBPageParser("Dortmund Universität", "Dortmund Hbf")
 
         traintuples = page.connections
         trains = list()
