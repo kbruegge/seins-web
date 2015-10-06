@@ -15,7 +15,7 @@ from app import app
 def index():
     return render_template("main.html")
 
-##no if delayed. yes if on time
+##no if delayed. yes if on time. maybe if somethin else is going on
 @app.route('/ontime/')
 def  yesno():
     try:
@@ -27,6 +27,7 @@ def  yesno():
             print(t)
             if t[3] and str(t[3]).lower().strip() == 's':
                 delay =  t[2]
+                break
         if delay is None:
             return "maybe"
         try:
