@@ -19,7 +19,8 @@ def index():
 @app.route('/ontime/')
 def  yesno():
     try:
-        departure_time = (datetime.datetime.now() - datetime.timedelta(minutes=5)).strftime("%H:%M")
+        departure_time = (datetime.datetime.now() - datetime.timedelta(minutes=14)).strftime("%H:%M")
+        print(departure_time)
         page = DBPageParser("Dortmund Universität", "Dortmund Hbf", departure_time=departure_time)
         traintuples = page.connections
         delay = None
@@ -54,7 +55,7 @@ def connections():
     #print(direction.lower())
     direction = request.args.get('direction', '')
     # time.sleep(3)
-    departure_time = (datetime.datetime.now() - datetime.timedelta(minutes=5)).strftime("%H:%M")
+    departure_time = (datetime.datetime.now() - datetime.timedelta(minutes=15)).strftime("%H:%M")
 
     try:
         if direction and direction.lower().strip() == "solingen":
